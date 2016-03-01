@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	
-	//get canvas size
+	//get canvas width and height assign to variable 
 	var canvas = $('#canvas')[0];
 	var ctx = canvas.getContext("2d");
 	var w = $("#canvas").width();
@@ -17,7 +17,7 @@ $(document).ready(function(){
 
 	var snake_array; // an array of cells to make up snake
 	
-
+	var debug=1;//turn debug on and off
 	
 
 	function init(){
@@ -29,7 +29,10 @@ $(document).ready(function(){
 		if(typeof game_loop !="undefined") clearInterval(game_loop);
 
 		game_loop = setInterval(paint,60);
-
+		if(debug){
+			console.log("init function");
+		}
+		
 	}
 
 	init();
@@ -38,7 +41,7 @@ $(document).ready(function(){
 
 	
 	
-	function createSnake (){
+	function createSnake(){
 
 		var lenght = 5;
 		snake_array = [];
@@ -46,6 +49,9 @@ $(document).ready(function(){
 			//create the snake 
 			//put x and y co 
 			snake_array.push({x:i,y:0})
+		}
+		if(debug){
+			console.log("create snake function");
 		}
 	}
 
@@ -63,12 +69,15 @@ $(document).ready(function(){
 		
 
 		var tx = snake_array[0].x;
-		var ty = snake_array[0].y; 
+		var ty = snake_array[0].y;
+		if(debug){
+			console.log(snake_array.length);
+		} 
 
-		if(direction=="left"){
+		if(direction=="right"){
 			tx++;
 		}
-		else if(direction=="right"){
+		else if(direction=="left"){
 			tx--;
 		}
 		else if(direction=="down"){
@@ -100,6 +109,9 @@ $(document).ready(function(){
 		
 		//console.log(tail);
 		snake_array.unshift(tail);
+		if(debug){
+			console.log(snake_array.length);
+		}
 
 		for(var i = 0; i < snake_array.length; i++){
 			var c = snake_array[i];
@@ -115,9 +127,9 @@ $(document).ready(function(){
 
 	function paintCell(x,y){
 		ctx.fillStyle = "blue";
-		ctx.fillRect(x,y,cw,cw);
+		ctx.fillRect(x*cw,y*cw,cw,cw);
 		ctx.strokeStyle = "white";
-		ctx.strokeRect(x,y,cw,cw);
+		ctx.strokeRect(x*cw,y*cw,cw,cw);
 	}
 
 	function createFood(){
@@ -139,9 +151,9 @@ $(document).ready(function(){
 	$(document).keydown(function(e){
 
 		var key = e.which; 
-		console.log(key);
-		if(key == "37" && direction != "left"){
-			direction = "right";
+		
+		if(key == "37" && direction != "right"){
+			direction = "left";
 		}
 		else if(key == "38" && direction !="down"){
 			direction = "up";
