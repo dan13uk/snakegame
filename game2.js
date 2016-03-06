@@ -52,7 +52,7 @@ var direction;
 			sy--;//if direction set to up decrement ty
 		}
 
-		if(sx == -1 || sy == -1 || sx == w/cw || sy == h/cw){
+		if(sx == -1 || sy == -1 || sx == w/cw || sy == h/cw || checkCollision(sx, sy, snake_array)){
 			init();
 			return;
 		}
@@ -94,6 +94,13 @@ var direction;
 			ctx.fillRect(x*cw,y*cw,cw,cw);
 			ctx.strokeStyle = "white";
 			ctx.strokeRect(x*cw,y*cw,cw,cw);
+	}
+	function checkCollision(x,y,array){
+		for(var i=0; i<array.length;i++){			
+			if(array[i].x == x && array[i].y == y)
+				return true;			
+		}
+		return false;
 	}
 	
 	document.onkeydown = function(e){

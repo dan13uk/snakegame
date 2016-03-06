@@ -1,19 +1,19 @@
-$(document).ready(function(){
+$(document).ready(function(){//jquery when document finish loading
 	//setting up gobal variables
 	//get canvas width and height assign to variable 
-	var canvas = $('#canvas')[0];
-	var ctx = canvas.getContext("2d");
-	var w = $("#canvas").width();
-	var h = $("#canvas").height();
+	var canvas = $('#canvas')[0];//get canvas by id
+	var ctx = canvas.getContext("2d");//set up drawing object to draw on canvas
+	var w = $("#canvas").width();//assign width of the canvas to variable
+	var h = $("#canvas").height();//assign height of the canvas to variable
 
-	//cell width
-	var cw = 10;
 	
-	var direction;
+	var cw = 10;//cell width
+	
+	var direction;//gobal direction variable to keep track of the direction of the snake
 
-	var food;
+	var food;//gobal food object to assign current location of the food 
 
-	var score;
+	var score;//variable to keep track of the score
 
 	var snake_array; // an array of cells to make up snake
 
@@ -37,12 +37,12 @@ $(document).ready(function(){
 		
 	}
 
-	init();
+	init();//start the game
 
 	
 
 	
-	
+	//create snake
 	function createSnake(){
 
 		var lenght = 5;//Snake start off size is 5
@@ -50,7 +50,7 @@ $(document).ready(function(){
 		for(var i = lenght-1; i >= 0 ;i--){
 			//create the snake looping throught the length
 			//put x and y coordinates into array
-			snake_array.push({x:i,y:0})
+			snake_array.push({x:i,y:0})//the push function push an element to begining of the array
 		}
 		if(debug){
 			console.log("create snake function");
@@ -61,12 +61,12 @@ $(document).ready(function(){
 	function paint(){
 
 		//draw canvas borders 
-	ctx.fillStyle = "white";//set fill 
-	ctx.fillRect(0,0,w,h);
-	ctx.strokeStyle = "black";
-	ctx.strokeRect(0,0,w,h);
-		$("#score").empty();
-		$("#score").append("<h3>Score: "+ score +"</h3>" );
+	ctx.fillStyle = "white";//set fill colour to white
+	ctx.fillRect(0,0,w,h);//draw the square 
+	ctx.strokeStyle = "black";//set the stroke colour to black 
+	ctx.strokeRect(0,0,w,h);//draw the border 
+		$("#score").empty();//jquery method remove all child node
+		$("#score").append("<h3>Score: "+ score +"</h3>" );//append the score into html
 
 		
 //get the coordiantes of the head first element of the array
@@ -133,7 +133,7 @@ $(document).ready(function(){
 	}
 
 	function paintCell(x,y){//paintCell function takes two arruments this will be the x and y coordinates 
-		ctx.fillStyle = "blue";//set the fillStyle to colour blue
+		ctx.fillStyle = "red";//set the fillStyle to colour blue
 		ctx.fillRect(x*cw,y*cw,cw,cw);//fillRec() passing the x and y coordinates with the cw variable setting the height and width
 		ctx.strokeStyle = "white";//set the strokestyle value to white
 		ctx.strokeRect(x*cw,y*cw,cw,cw);//create stroke rect using the x and y parameters
@@ -144,8 +144,8 @@ $(document).ready(function(){
 //so a random number between 1 - 44 is generated
 		var fx = Math.round(Math.random()*(w-cw)/cw);
 		var fy = Math.round(Math.random()*(h-cw)/cw);
-		if (checkCollision(fx,fy,snake_array)){
-		 createFood();
+		if (checkCollision(fx,fy,snake_array)){//check if the random co ordinates created is not equal to any co ordinates in the array 
+		 createFood();//if so generate random co ordinates for food
 		 console.log("x : " + x + "y : " + y);
 	}
 	else 
